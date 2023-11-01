@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto WEB I</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+        <div id="edge">
+            <h2>Navegação</h2>
+            <button id="addItem"><i class="fa-solid fa-plus"></i>Adicionar item</button>
+            <button id="cart"><i class="fa-solid fa-cart-shopping"></i>
+                <p id="num_products"></p>Ver itens no carrinho
+            </button>
+            <button id="trash"><i class="fa-solid fa-trash"></i>Apagar itens do carrinhoss</button>
+        </div>
+
+        <div id="products" class="displayOn">
+            <ul id="list"></ul>
+        </div>
+
+        <div>
+            <ul id="product-cart" class="displayNone"></ul>
+        </div>
+
+        <div id="div-formulario" class="displayNone">
+            <form id="formulario">
+                <h2>CRIAR PRODUTO</h2>
+                <input placeholder="URL Img" type="text" name="urlimg" id="productImageUrl">
+                <input placeholder="Name" type="text" name="nome" id="productName">
+                <input placeholder="Price" type="number" name="price" id="productPrice">
+                <input type="submit" name="Add" id="submitProductData">
+            </form>
+        </div>
+    <script src="products.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+/* FORMATAÇÃO GERAL */
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+}
+
+/* TERMINO FORMATAÇÃO GERAL */
+
+#edge{
+    background-color: black;
+    width: 110px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+#edge button{
+    background-color: black;
+    color: white;
+}
+
+#list {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 20px;
+    list-style-type: none;
+}
+
+#num_products {
+    list-style-type: none;
+}
+
+#products {
+    background-color: rgb(198, 137, 255);
+    padding-left: 10px;
+}
+
+#products div{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 300px;
+}
+
+.displayNone {
+    display: none;
+}
+
+.displayOn {
+    display: block;
+}
