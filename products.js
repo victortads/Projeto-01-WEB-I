@@ -1,4 +1,4 @@
-let dados = [
+let products = [
     {
         id: 1,
         name: "Pc da Nasa",
