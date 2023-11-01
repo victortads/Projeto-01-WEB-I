@@ -1,6 +1,5 @@
 let idx = 0;
 let items = [];
-let lista = document.getElementById("list");
 let trash = document.getElementById("trash");
 let buttons = document.getElementsByClassName("button");
 let cart = document.getElementById("cart");
@@ -39,24 +38,29 @@ function addLi() {
 
 addLi();
 
-function addButton() {
+//Funçao que é acionada quando o button é clicado
+function lidarComEventoDoButton(e) {
+    product_cart.classList.add('displayNone');
+    let b = e.target.parentNode.childNodes[3].innerText;
+    items.push(b);
+    let html_products = `<h1>Produtos no carrinho</h1>`;
+    for (let n of items) {
+        html_products += `<li>${n}</li>`;
+        document.getElementById("product-cart").innerHTML = html_products;
+    }
+    idx++;
+    addIdx();
+}
+
+// Remove e depois adiciona os eventlisteners a os buttons
+function addButtonsListener() {
     for (let a of buttons) {
-        a.addEventListener("click", (e) => {
-            product_cart.classList.add('displayNone');
-            let b = e.target.parentNode.childNodes[3].innerText;
-            items.push(b);
-            let html_products = '';
-            for (let n of items) {
-                html_products += `<li>${n}</li>`;
-                document.getElementById("product-cart").innerHTML = html_products;
-            }
-            idx++;
-            addIdx();
-        });
+        a.removeEventListener("click", lidarComEventoDoButton);
+        a.addEventListener("click", lidarComEventoDoButton);
     }
 }
 
-addButton();
+addButtonsListener();
 
 
 function listCart() {
@@ -86,36 +90,27 @@ cart.addEventListener("click", () => listCart());
 
 function apagaTudo() {
     items = [];
-    product_cart.innerHTML = '';
+    product_cart.innerHTML = '<h1>Produtos no carrinho</h1>';
     rmIdx();
-    product_cart.classList.remove('displayOn');
-    product_cart.classList.add('displayNone');
-    div_product.classList.remove('displayNone');
-    div_product.classList.add('displayOn');
-    div_form.classList.remove('displayOn');
-    div_form.classList.add('displayNone');
 }
 
 trash.addEventListener("click", () => apagaTudo());
 
 function openForm() {
+    product_cart.classList.remove('displayOn');
+    product_cart.classList.add('displayNone');
     if (div_product.classList.contains('displayOn')) {
         div_form.classList.remove('displayNone');
         div_form.classList.add('displayOn');
-
-        if (div_product.classList.contains('displayOn')) {
-            div_product.classList.remove('displayOn');
-            div_product.classList.add('displayNone');
-        } else {
-            div_product.classList.add('displayNone');
-        }
+        div_product.classList.remove('displayOn');
+        div_product.classList.add('displayNone');
     } else {
         div_form.classList.remove('displayOn');
         div_form.classList.add('displayNone');
         div_product.classList.remove('displayNone');
         div_product.classList.add('displayOn');
     }
-    addButton();
+    addButtonsListener();
 }
 
 addItem.addEventListener("click", () => openForm());
@@ -134,7 +129,11 @@ form.addEventListener('submit', (event) => {
     }
     dados.push(product);
     addLi();
+    atualizarButtons();
+    addButtonsListener(); //Adiciona os listeners novamente
 });
 
-
-
+//atualiza o array de buttons, para que os que foram adicionasdos depois tabem sejam mapeados
+function atualizarButtons() {
+    buttons = document.getElementsByClassName("button");
+}

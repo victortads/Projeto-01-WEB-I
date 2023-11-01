@@ -12,7 +12,7 @@ body {
 
 /* TERMINO FORMATAÇÃO GERAL */
 
-#edge{
+#edge {
     background-color: black;
     width: 110px;
     color: white;
@@ -20,7 +20,7 @@ body {
     flex-direction: column;
 }
 
-#edge button{
+#edge button {
     background-color: black;
     color: white;
 }
@@ -37,13 +37,15 @@ body {
 }
 
 #products {
-    background-color: rgb(198, 137, 255);
+    background-color: rgb(240, 255, 212);
     padding-left: 10px;
 }
 
-#products div{
+#products ul {
+    margin-top: 30px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 .product {
@@ -51,6 +53,11 @@ body {
     flex-direction: column;
     width: 300px;
     height: 300px;
+}
+
+.button{
+    background-color: aliceblue;
+    border: outset;
 }
 
 .displayNone {
