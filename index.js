@@ -83,16 +83,16 @@ function lidarComEventoDoExcluirItem(e) {
     for (let i = 0; i < items.length; i++) {
         if (items[i] === t) {
             items.splice(i, 1);
+            break;
         }
     }
     if (idx > 0) {
         idx--;
         addIdx();
     }
-    console.log(items);
-    atualizarCart();
     atualizarExcluirItem();
     addExcluirItemListener();
+    atualizarCart();
 }
 
 // Remove e depois adiciona os eventlisteners a os buttons
@@ -156,15 +156,15 @@ function apagaTudo() {
 
 function atualizarCart() {
     let html_products = `<h1>Produtos no carrinho</h1>`;
+    if(items.length >= 1){
     for (let n of items) {
-        if(items.length > 0){
         html_products += `<li>${n}</li>
         <button class="excluirItem"><i class="fa-solid fa-x"></i> Excluir item</button>`;
         document.getElementById("product-cart").innerHTML = html_products;
+    }
         } else{
         document.getElementById("product-cart").innerHTML = html_products;
         }
-    }
     atualizarExcluirItem();
     addExcluirItemListener();
 }
