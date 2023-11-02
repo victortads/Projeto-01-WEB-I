@@ -67,7 +67,7 @@ function lidarComEventoDoButton(e) {
     items.push(b);
     let html_products = `<h1>Produtos no carrinho</h1>`;
     for (let n of items) {
-        html_products += `<li><div><p>${n}</p>
+        html_products += `<li><div class="cart-item"><p>${n}</p>
         <button class="excluirItem"><i class="fa-solid fa-x"></i> Excluir item</button></div></li>`;
     }
     document.getElementById("product-cart").innerHTML = html_products;
@@ -78,22 +78,28 @@ function lidarComEventoDoButton(e) {
 }
 
 function lidarComEventoDoExcluir(e) {
-    let ref = e.target.parentNode.childNodes[5].innerText;
-    for (let i = 0; i < products.length; i++) {
-        if (products[i].name === ref) {
-            products.splice(i, 1);
-        }
-        if (products.length == 0) {
-            products = [];
+    let confirm = window.confirm("Deseja realmente excluir este item????");
+    if (confirm) {
+        let ref = e.target.parentNode.childNodes[5].innerText;
+        for (let i = 0; i < products.length; i++) {
+            if (products[i].name === ref) {
+                products.splice(i, 1);
+
+            }
+            if (products.length == 0) {
+                products = [];
+            }
         }
     }
     addLi();
     atualizarButtons();
     addButtonsListener();
+    atualizarExcluir();
+    addExcluirListener();
 }
 
 function lidarComEventoDoExcluirItem(e) {
-    let ref = e.srcElement.parentNode.childNodes[0].innerText;    
+    let ref = e.srcElement.parentNode.childNodes[0].innerText;
     for (let i = 0; i < products.length; i++) {
         if (items[i] === ref) {
             items.splice(i, 1);
@@ -169,7 +175,7 @@ function atualizarCart() {
     let html_products = `<h1>Produtos no carrinho</h1>`;
     if (items.length >= 1) {
         for (let n of items) {
-            html_products += `<li><div><p>${n}</p><button class="excluirItem"><i class="fa-solid fa-x"></i> Excluir item</button></div></li>`;
+            html_products += `<li><div class="cart-item"><p>${n}</p><button class="excluirItem"><i class="fa-solid fa-x"></i> Excluir item</button></div></li>`;
             document.getElementById("product-cart").innerHTML = html_products;
         }
     } else {
