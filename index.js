@@ -3,6 +3,7 @@ let items = [];
 let trash = document.getElementById("trash");
 let buttons = document.getElementsByClassName("button");
 let excluir = document.getElementsByClassName("excluir");
+let excluirItem = document.getElementsByClassName("excluirItem");
 let cart = document.getElementById("cart");
 let product_cart = document.getElementById("product-cart");
 let div_product = document.getElementById("products");
@@ -29,7 +30,7 @@ function addLi() {
             html +=
                 `<li> 
         <div class="product">
-        <button class="excluir"><i class="fa-solid fa-x"></i></button>
+        <button class="excluir"><i class="fa-solid fa-x"></i> Excluir item</button>
         <img src="${products[element].src}"></img>
         <p id="name">${products[element].name}</p>
         <p id="price">R$ ${products[element].price}</p>
@@ -52,7 +53,8 @@ function lidarComEventoDoButton(e) {
     items.push(b);
     let html_products = `<h1>Produtos no carrinho</h1>`;
     for (let n of items) {
-        html_products += `<li>${n}</li>`;
+        html_products += `<li>${n}</li>
+        <button class="excluirItem"><i class="fa-solid fa-x"></i> Excluir item</button>`;
         document.getElementById("product-cart").innerHTML = html_products;
     }
     idx++;
@@ -61,7 +63,6 @@ function lidarComEventoDoButton(e) {
 
 function lidarComEventoDoExcluir(e) {
     let ref = e.target.parentNode.childNodes[5].innerText;
-    console.log(ref);
     for (let i = 0; i < products.length; i++) {
         if (products[i].name === ref) {
             products.splice(i, 1);
@@ -75,6 +76,23 @@ function lidarComEventoDoExcluir(e) {
     addButtonsListener();
     atualizarExcluir();
     addExcluirListener();
+}
+
+function lidarComEventoDoExcluirItem(e) {
+    let t = e.target.parentNode.childNodes[1].outerText;
+    for (let i = 0; i < items.length; i++) {
+        if (items[i] === t) {
+            items.splice(i, 1);
+        }
+    }
+    if (idx > 0) {
+        idx--;
+        addIdx();
+    }
+    console.log(items);
+    atualizarCart();
+    atualizarExcluirItem();
+    addExcluirItemListener();
 }
 
 // Remove e depois adiciona os eventlisteners a os buttons
@@ -92,8 +110,16 @@ function addExcluirListener() {
     }
 }
 
+function addExcluirItemListener() {
+    for (let a of excluirItem) {
+        a.removeEventListener("click", lidarComEventoDoExcluirItem);
+        a.addEventListener("click", lidarComEventoDoExcluirItem);
+    }
+}
+
 addButtonsListener();
 addExcluirListener();
+addExcluirItemListener();
 
 function listCart() {
     if (div_product.classList.contains('displayOn')) {
@@ -116,6 +142,8 @@ function listCart() {
         div_form.classList.remove('displayOn');
         div_form.classList.add('displayNone');
     }
+
+    addExcluirItemListener();
 }
 
 cart.addEventListener("click", () => listCart());
@@ -124,6 +152,21 @@ function apagaTudo() {
     items = [];
     product_cart.innerHTML = '<h1>Produtos no carrinho</h1>';
     rmIdx();
+}
+
+function atualizarCart() {
+    let html_products = `<h1>Produtos no carrinho</h1>`;
+    for (let n of items) {
+        if(items.length > 0){
+        html_products += `<li>${n}</li>
+        <button class="excluirItem"><i class="fa-solid fa-x"></i> Excluir item</button>`;
+        document.getElementById("product-cart").innerHTML = html_products;
+        } else{
+        document.getElementById("product-cart").innerHTML = html_products;
+        }
+    }
+    atualizarExcluirItem();
+    addExcluirItemListener();
 }
 
 trash.addEventListener("click", () => apagaTudo());
@@ -174,4 +217,8 @@ function atualizarButtons() {
 
 function atualizarExcluir() {
     excluir = document.getElementsByClassName("excluir");
+}
+
+function atualizarExcluirItem() {
+    excluirItem = document.getElementsByClassName("excluirItem");
 }

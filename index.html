@@ -10,33 +10,39 @@
 </head>
 
 <body>
+    <div id="header">
+        <img src="https://dewey.tailorbrands.com/production/brand_version_mockup_image/626/8676398626_dff658cb-66a2-45d4-a054-905ab51dfebf.png?cb=1698880253"
+            alt="Logo">
         <div id="edge">
-            <h2>Navegação</h2>
             <button id="addItem"><i class="fa-solid fa-plus"></i>Adicionar item</button>
             <button id="cart"><i class="fa-solid fa-cart-shopping"></i>
                 <p id="num_products"></p>Ver itens no carrinho
             </button>
             <button id="trash"><i class="fa-solid fa-trash"></i>Apagar itens do carrinho</button>
         </div>
+    </div>
 
-        <div id="products" class="displayOn">
-            <ul id="list"></ul>
-        </div>
 
-        <div>
+    <div id="products" class="displayOn">
+        <ul id="list"></ul>
+    </div>
 
-            <ul id="product-cart" class="displayNone"><h1>Produtos no carrinho</h1></ul>
-        </div>
 
-        <div id="div-formulario" class="displayNone">
-            <form id="formulario">
-                <h2>CRIAR PRODUTO</h2>
-                <input placeholder="URL Img" type="text" name="urlimg" id="productImageUrl">
-                <input placeholder="Name" type="text" name="nome" id="productName">
-                <input placeholder="Price" type="number" name="price" id="productPrice">
-                <input type="submit" name="Add" id="submitProductData">
-            </form>
-        </div>
+    <div>
+        <ul id="product-cart" class="displayNone">
+            <h1>Produtos no carrinho</h1>
+        </ul>
+    </div>
+
+    <div id="div-formulario" class="displayNone">
+        <form id="formulario">
+            <h2>CRIAR PRODUTO</h2>
+            <input placeholder="URL Img" type="text" name="urlimg" id="productImageUrl">
+            <input placeholder="Name" type="text" name="nome" id="productName">
+            <input placeholder="Price" type="number" name="price" id="productPrice">
+            <input type="submit" name="Add" id="submitProductData">
+        </form>
+    </div>
     <script src="products.js"></script>
     <script src="index.js"></script>
 </body>
