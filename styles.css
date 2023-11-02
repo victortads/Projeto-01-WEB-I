@@ -79,6 +79,10 @@ body {
     justify-content: space-around;
 }
 
+#product_cart li{
+    display: block;
+}
+
 .product {
     display: flex;
     flex-direction: column;

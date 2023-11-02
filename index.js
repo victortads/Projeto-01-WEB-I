@@ -29,14 +29,14 @@ function addLi() {
         for (let element = 0; element < products.length; element++) {
             html +=
                 `<li> 
-        <div class="product">
-        <button class="excluir"><i class="fa-solid fa-x"></i> Excluir item</button>
-        <img src="${products[element].src}"></img>
-        <p id="name">${products[element].name}</p>
-        <p id="price">R$ ${products[element].price}</p>
-        <button id="${products[element].id}"class="button">Adicionar ao carrinho</button>
-        </div>
-        </li>`;
+            <div class="product">
+            <button class="excluir"><i class=s"fa-solid fa-x"></i> Excluir item</button>
+            <img src="${products[element].src}"></img>
+            <p id="name">${products[element].name}</p>
+            <p id="price">R$ ${products[element].price}</p>
+            <button id="${products[element].id}"class="button">Adicionar ao carrinho</button>
+            </div>
+            </li>`;
             document.getElementById("list").innerHTML = html;
         }
     } else {
@@ -46,19 +46,35 @@ function addLi() {
 
 addLi();
 
+//atualiza o array de buttons, para que os que foram adicionasdos depois tabem sejam mapeados
+function atualizarButtons() {
+    buttons = document.getElementsByClassName("button");
+}
+
+function atualizarExcluir() {
+    excluir = document.getElementsByClassName("excluir");
+}
+
+function atualizarExcluirItem() {
+    excluirItem = document.getElementsByClassName("excluirItem");
+}
+
 //Funçao que é acionada quando o button é clicado
 function lidarComEventoDoButton(e) {
     product_cart.classList.add('displayNone');
     let b = e.target.parentNode.childNodes[5].innerText;
+    console.log(b);
     items.push(b);
     let html_products = `<h1>Produtos no carrinho</h1>`;
     for (let n of items) {
-        html_products += `<li>${n}</li>
-        <button class="excluirItem"><i class="fa-solid fa-x"></i> Excluir item</button>`;
-        document.getElementById("product-cart").innerHTML = html_products;
+        html_products += `<li><div><p>${n}</p>
+        <button class="excluirItem"><i class="fa-solid fa-x"></i> Excluir item</button></div></li>`;
     }
+    document.getElementById("product-cart").innerHTML = html_products;
     idx++;
     addIdx();
+    atualizarExcluirItem();
+    addExcluirItemListener();
 }
 
 function lidarComEventoDoExcluir(e) {
@@ -74,25 +90,25 @@ function lidarComEventoDoExcluir(e) {
     addLi();
     atualizarButtons();
     addButtonsListener();
-    atualizarExcluir();
-    addExcluirListener();
 }
 
 function lidarComEventoDoExcluirItem(e) {
-    let t = e.target.parentNode.childNodes[1].outerText;
-    for (let i = 0; i < items.length; i++) {
-        if (items[i] === t) {
+    let ref = e.srcElement.parentNode.childNodes[0].innerText;    
+    for (let i = 0; i < products.length; i++) {
+        if (items[i] === ref) {
             items.splice(i, 1);
-            break;
+        }
+        if (items.length == 0) {
+            items = [];
         }
     }
     if (idx > 0) {
         idx--;
         addIdx();
     }
+    atualizarCart();
     atualizarExcluirItem();
     addExcluirItemListener();
-    atualizarCart();
 }
 
 // Remove e depois adiciona os eventlisteners a os buttons
@@ -142,31 +158,31 @@ function listCart() {
         div_form.classList.remove('displayOn');
         div_form.classList.add('displayNone');
     }
-
+    atualizarExcluirItem();
     addExcluirItemListener();
 }
 
 cart.addEventListener("click", () => listCart());
 
+
+function atualizarCart() {
+    let html_products = `<h1>Produtos no carrinho</h1>`;
+    if (items.length >= 1) {
+        for (let n of items) {
+            html_products += `<li><div><p>${n}</p><button class="excluirItem"><i class="fa-solid fa-x"></i> Excluir item</button></div></li>`;
+            document.getElementById("product-cart").innerHTML = html_products;
+        }
+    } else {
+        document.getElementById("product-cart").innerHTML = html_products;
+    }
+    atualizarExcluirItem();
+    addExcluirItemListener();
+}
+
 function apagaTudo() {
     items = [];
     product_cart.innerHTML = '<h1>Produtos no carrinho</h1>';
     rmIdx();
-}
-
-function atualizarCart() {
-    let html_products = `<h1>Produtos no carrinho</h1>`;
-    if(items.length >= 1){
-    for (let n of items) {
-        html_products += `<li>${n}</li>
-        <button class="excluirItem"><i class="fa-solid fa-x"></i> Excluir item</button>`;
-        document.getElementById("product-cart").innerHTML = html_products;
-    }
-        } else{
-        document.getElementById("product-cart").innerHTML = html_products;
-        }
-    atualizarExcluirItem();
-    addExcluirItemListener();
 }
 
 trash.addEventListener("click", () => apagaTudo());
@@ -209,16 +225,3 @@ form.addEventListener('submit', (event) => {
     atualizarExcluir();
     addExcluirListener();
 });
-
-//atualiza o array de buttons, para que os que foram adicionasdos depois tabem sejam mapeados
-function atualizarButtons() {
-    buttons = document.getElementsByClassName("button");
-}
-
-function atualizarExcluir() {
-    excluir = document.getElementsByClassName("excluir");
-}
-
-function atualizarExcluirItem() {
-    excluirItem = document.getElementsByClassName("excluirItem");
-}
