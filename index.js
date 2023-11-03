@@ -59,7 +59,7 @@ function atualizarExcluirItem() {
     excluirItem = document.getElementsByClassName("excluirItem");
 }
 
-//Funçao que é acionada quando o button é clicado
+// FUNÇÕES DOS BUTTONS - ADICIONAR CARRINHO - EXCLUIR ITEM - APAGAR DO CARRINHO -
 function lidarComEventoDoButton(e) {
     product_cart.classList.add('displayNone');
     let b = e.target.parentNode.childNodes[5].innerText;
@@ -117,7 +117,7 @@ function lidarComEventoDoExcluirItem(e) {
     addExcluirItemListener();
 }
 
-// Remove e depois adiciona os eventlisteners a os buttons
+// REINICIAR OS LISTENERS DOS BUTTONS
 function addButtonsListener() {
     for (let a of buttons) {
         a.removeEventListener("click", lidarComEventoDoButton);
@@ -144,25 +144,25 @@ addExcluirListener();
 addExcluirItemListener();
 
 function listCart() {
-    if (div_product.classList.contains('displayOn')) {
+    if (div_product.classList.contains('displayOn') && div_form.classList.contains('displayNone')) {
         product_cart.classList.remove('displayNone');
         product_cart.classList.add('displayOn');
-        div_form.classList.remove('displayOn');
-        div_form.classList.add('displayNone');
-
-        if (div_product.classList.contains('displayOn')) {
-            div_product.classList.remove('displayOn');
-            div_product.classList.add('displayNone');
-        } else {
-            div_product.classList.add('displayNone');
-        }
+        div_product.classList.remove('displayOn');
+        div_product.classList.add('displayNone');
     } else {
         product_cart.classList.remove('displayOn');
         product_cart.classList.add('displayNone');
         div_product.classList.remove('displayNone');
         div_product.classList.add('displayOn');
+    }
+
+    if (div_form.classList.contains('displayOn')) {
         div_form.classList.remove('displayOn');
         div_form.classList.add('displayNone');
+        div_product.classList.remove('displayOn');
+        div_product.classList.add('displayNone');
+        product_cart.classList.remove('displayNone');
+        product_cart.classList.add('displayOn');
     }
     atualizarExcluirItem();
     addExcluirItemListener();
@@ -194,18 +194,26 @@ function apagaTudo() {
 trash.addEventListener("click", () => apagaTudo());
 
 function openForm() {
-    product_cart.classList.remove('displayOn');
-    product_cart.classList.add('displayNone');
-    if (div_product.classList.contains('displayOn')) {
+    if (div_product.classList.contains('displayOn') && product_cart.classList.contains('displayNone')) {
         div_form.classList.remove('displayNone');
         div_form.classList.add('displayOn');
         div_product.classList.remove('displayOn');
         div_product.classList.add('displayNone');
-    } else {
+    }
+    else {
         div_form.classList.remove('displayOn');
         div_form.classList.add('displayNone');
         div_product.classList.remove('displayNone');
         div_product.classList.add('displayOn');
+    }
+
+    if (product_cart.classList.contains('displayOn')) {
+        product_cart.classList.remove('displayOn');
+        product_cart.classList.add('displayNone');
+        div_product.classList.remove('displayOn');
+        div_product.classList.add('displayNone');
+        div_form.classList.remove('displayNone');
+        div_form.classList.add('displayOn');
     }
     addButtonsListener();
 }
@@ -227,7 +235,7 @@ form.addEventListener('submit', (event) => {
     products.push(product);
     addLi();
     atualizarButtons();
-    addButtonsListener(); //Adiciona os listeners novamente
+    addButtonsListener();
     atualizarExcluir();
     addExcluirListener();
 });
