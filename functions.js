@@ -71,6 +71,8 @@ function lidarComEventoDoExcluir(e) {
     addLi();
     atualizarButtons();
     addButtonsListener();
+    atualizarExcluir();
+    addExcluirListener();
 }
 
 function lidarComEventoDoExcluirItem(e) {
@@ -198,4 +200,25 @@ function openForm() {
         div_form.classList.add('displayOn');
     }
     addButtonsListener();
+}
+
+
+function validateForm(url) {
+    return new Promise((resolve, reject) => {
+        let img = new Image();
+        img.src = url;
+        img.onload = function () {
+            if (img.width === 0) {
+                console.log("width sem tamanho");
+                reject(false);
+            } else {
+                console.log("width da imagem: " + img.width);
+                resolve(true);
+            }
+        };
+        img.onerror = function () {
+            console.log("Não carregou a imagem");
+            reject(false);
+        };
+    });
 }

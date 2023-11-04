@@ -10,6 +10,7 @@ let div_product = document.getElementById("products");
 let addItem = document.getElementById("addItem");
 let div_form = document.getElementById("div-formulario");
 let form = document.getElementById("formulario");
+let submit = document.getElementById("submit");
 
 addLi();
 addButtonsListener();
@@ -22,24 +23,25 @@ trash.addEventListener("click", () => apagaTudo());
 
 addItem.addEventListener("click", () => openForm());
 
-form.addEventListener('submit', (event) => {
-    event.preventDefault()
-    div_form.classList.remove('displayOn')
-    let name = event.target.childNodes[5].value
-    let price = event.target.childNodes[7].value
-    let imgURL = event.target.childNodes[3].value
-
+form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    div_form.classList.remove('displayOn');
+    let name = event.target.childNodes[5].value;
+    let price = event.target.childNodes[7].value;
+    let imgURL = event.target.childNodes[3].value;
     let product = {
         "name": name,
         "price": price,
         "src": imgURL
+    };
+    if (await validateForm(imgURL)) {
+        products.push(product);
+        addLi();
+        atualizarButtons();
+        addButtonsListener();
+        atualizarExcluir();
+        addExcluirListener();
     }
-    products.push(product);
-    addLi();
-    atualizarButtons();
-    addButtonsListener();
-    atualizarExcluir();
-    addExcluirListener();
 
     div_form.classList.remove('displayOn');
     div_form.classList.add('displayNone');
