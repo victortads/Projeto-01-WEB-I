@@ -14,7 +14,7 @@ body {
     flex-direction: column;
     width: 100%;
     height: 100%;
-    background-color: #ffbaa2;
+    background-color: #f8f8f8;
 }
 
 /* TERMINO FORMATAÇÃO GERAL */
@@ -46,15 +46,31 @@ body {
     background-color: #D9D9D9;
     border: none;
     color: black;
+    transition: 0.5s;
+}
+
+#edge button:hover {
+    padding-left: 15px;
+    padding-right: 15px;
+    cursor: pointer;
+    background-color: #b4b4b4;
+    transition: 0.5s;
 }
 
 .excluir{
-    background-color: #ffbaa2;
     column-gap: 20px;
+    background-color: #faf7f7;
+    font-weight: 300;
     color: red;
     border: none;
     display: flex;
     justify-content: center;
+}
+
+.excluir:hover{
+    background-color: #ff9696;
+    cursor: pointer;
+    transition: 0.5s;
 }
 
 #list {
@@ -69,10 +85,11 @@ body {
 }
 
 #products {
-    padding-left: 10px;
+    padding: 30px;
 }
 
 #products ul {
+    row-gap: 40px;
     margin-top: 30px;
     display: flex;
     flex-wrap: wrap;
@@ -80,26 +97,51 @@ body {
 }
 
 .product {
+    padding: 10px;
     display: flex;
     flex-direction: column;
-    width: 300px;
-    height: 300px;
+    width: 303px;
+    height: 252px;
+}
+
+.product:hover{
+    border-radius: 10px;
+    border: #000000 1px dashed;
+    transition: 0.5s;
 }
 
 .product img{
-    width: 300px;
-    height: 168px;
+    width: 100%;
+    height: 63%;
 }
 
 .button{
-    background-color: aliceblue;
-    border: outset;
+    color:#faf7f7;
+    height: 25px;
+    background-color: rgb(100, 100, 100);
+    border: rgb(0, 0, 0) outset;
+    transition: 0.5s;
+}
+
+.button:hover{
+    background-color: rgb(0, 0, 0);
+    color: white;
+    border: none;
+    transition: 0.5s;
+    cursor: pointer;
 }
 
 .excluirItem{
-    background-color: #ffbaa2;
+    background-color: #faf7f7;
     border: none;
     color: red;
+    transition: 0.5s;
+}
+
+.excluirItem:hover{
+    cursor: pointer;
+    background-color: rgb(255, 193, 193);
+    transition: 0.5s;
 }
 
 .cart-item{
