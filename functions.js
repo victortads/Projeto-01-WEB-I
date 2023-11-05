@@ -14,6 +14,22 @@ function rmIdx() {
     document.getElementById("num_products").innerText = hmtl_num_products;
 }
 
+function atualizarElementsCart() {
+    let html_products = `<h1>Produtos no carrinho</h1>`;
+    let numItem = [];
+    for (let item of items) {
+        if (!numItem[item]) {
+            numItem[item] = 1;
+        } else {
+            numItem[item] += 1;
+        }
+    }
+    for (let item in numItem) {
+        html_products += `<li><div class="cart-item"><p>${item}</p><p>${numItem[item]}</p>
+    <button class="excluirItem"><i class="fa-solid fa-x"></i> Excluir item</button></div></li>`;
+    }
+    document.getElementById("product-cart").innerHTML = html_products;
+}
 function addLi() {
     let html = '';
     if (products.length > 0) {
@@ -38,13 +54,10 @@ function addLi() {
 function lidarComEventoDoButton(e) {
     product_cart.classList.add('displayNone');
     let b = e.target.parentNode.childNodes[5].innerText;
+
     items.push(b);
-    let html_products = `<h1>Produtos no carrinho</h1>`;
-    for (let n of items) {
-        html_products += `<li><div class="cart-item"><p>${n}</p>
-        <button class="excluirItem"><i class="fa-solid fa-x"></i> Excluir item</button></div></li>`;
-    }
-    document.getElementById("product-cart").innerHTML = html_products;
+
+    atualizarElementsCart();
     idx++;
     addIdx();
     atualizarExcluir();
@@ -155,20 +168,18 @@ function listCart() {
 }
 
 function atualizarCart() {
-    let html_products = `<h1>Produtos no carrinho</h1>`;
+    console.log(items);
     if (items.length >= 1) {
-        for (let n of items) {
-            html_products += `<li><div class="cart-item"><p>${n}</p><button class="excluirItem"><i class="fa-solid fa-x"></i> Excluir item</button></div></li>`;
-            document.getElementById("product-cart").innerHTML = html_products;
-        }
+        atualizarElementsCart();
     } else {
-        document.getElementById("product-cart").innerHTML = html_products;
+        document.getElementById("product-cart").innerHTML = '<h1>Produtos no carrinho</h1>';
     }
     atualizarExcluir();
     addExcluirListener();
     atualizarExcluirItem();
     addExcluirItemListener();
 }
+
 
 function apagaTudo() {
     items = [];
@@ -208,12 +219,14 @@ function validateImg(url) {
         img.src = url;
         img.onload = function () {
             if (img.width === 0) {
+                alert("Imagem sem tamanho. Width = " + img.width);
                 reject(false);
             } else {
                 resolve(true);
             }
         };
         img.onerror = function () {
+            alert("Imagem não foi carregada");
             reject(false);
         };
     });
@@ -224,6 +237,7 @@ function validateName(name) {
         if (name.length) {
             resolve(true);
         } else {
+            alert("Nome vazio. Por favor, insira um nome!");
             reject(false);
         }
     });
@@ -236,11 +250,8 @@ function validateNum(num) {
             resolve(true);
         }
         if (number < 0) {
+            alert("Número inserido é menor que 0. Por favor, insira um número válido");
             reject(false);
         }
-        if (number === null) {
-            reject(false);
-        }
-
     });
 }

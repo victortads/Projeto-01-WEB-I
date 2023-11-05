@@ -29,7 +29,9 @@ form.addEventListener('submit', async (event) => {
     let name = event.target.childNodes[5].value;
     let price = event.target.childNodes[7].value;
     let imgURL = event.target.childNodes[3].value;
+    let idElement = products.length;
     let product = {
+        "id" : idElement,
         "name": name,
         "price": price,
         "src": imgURL
