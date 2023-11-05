@@ -34,14 +34,18 @@ form.addEventListener('submit', async (event) => {
         "price": price,
         "src": imgURL
     };
-    if (await validateForm(imgURL)) {
+    if (await validateImg(imgURL) && await validateName(name) && await validateNum(price)) {
         products.push(product);
+        document.getElementById("productImageUrl").value = '';
+        document.getElementById("productName").value = '';
+        document.getElementById("productPrice").value = '';
         addLi();
         atualizarButtons();
         addButtonsListener();
         atualizarExcluir();
         addExcluirListener();
     }
+
 
     div_form.classList.remove('displayOn');
     div_form.classList.add('displayNone');

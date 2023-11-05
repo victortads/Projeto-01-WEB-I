@@ -38,7 +38,6 @@ function addLi() {
 function lidarComEventoDoButton(e) {
     product_cart.classList.add('displayNone');
     let b = e.target.parentNode.childNodes[5].innerText;
-    console.log(b);
     items.push(b);
     let html_products = `<h1>Produtos no carrinho</h1>`;
     for (let n of items) {
@@ -203,22 +202,45 @@ function openForm() {
 }
 
 
-function validateForm(url) {
+function validateImg(url) {
     return new Promise((resolve, reject) => {
         let img = new Image();
         img.src = url;
         img.onload = function () {
             if (img.width === 0) {
-                console.log("width sem tamanho");
                 reject(false);
             } else {
-                console.log("width da imagem: " + img.width);
                 resolve(true);
             }
         };
         img.onerror = function () {
-            console.log("Não carregou a imagem");
             reject(false);
         };
+    });
+}
+
+function validateName(name) {
+    return new Promise((resolve, reject) => {
+        if (name.length) {
+            resolve(true);
+        } else {
+            reject(false);
+        }
+    });
+}
+
+function validateNum(num) {
+    return new Promise((resolve, reject) => {
+        let number = parseInt(num);
+        if (number >= 0) {
+            resolve(true);
+        }
+        if (number < 0) {
+            reject(false);
+        }
+        if (number === null) {
+            reject(false);
+        }
+
     });
 }
