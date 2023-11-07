@@ -1,3 +1,4 @@
+// Adiciona um índice para a quantidade de items no carrinho
 function addIdx() {
     let hmtl_num_products;
     if (idx == 0) {
@@ -8,15 +9,19 @@ function addIdx() {
     document.getElementById("num_products").innerText = hmtl_num_products;
 }
 
+// Zera o índice para a quantidade de items no carrinho
 function rmIdx() {
     idx = 0;
     let hmtl_num_products = '';
     document.getElementById("num_products").innerText = hmtl_num_products;
 }
 
+// Atualiza os items no carrinho
 function atualizarElementsCart() {
     let html_products = `<h1>Produtos no carrinho</h1>`;
     let numItem = [];
+
+    //Compara quantos items com o mesmo nome existem no array
     for (let item of items) {
         if (!numItem[item]) {
             numItem[item] = 1;
@@ -24,12 +29,16 @@ function atualizarElementsCart() {
             numItem[item] += 1;
         }
     }
+
+    // Insere esses items no carrinho com a quantidade de repetições dos mesmos
     for (let item in numItem) {
-        html_products += `<li><div class="cart-item"><p>${item}</p><p>${numItem[item]}</p>
+        html_products += `<li><div class="cart-item"><p>${item}</p><p>Unidades: ${numItem[item]}</p>
     <button class="excluirItem"><i class="fa-solid fa-x"></i> Excluir item</button></div></li>`;
     }
     document.getElementById("product-cart").innerHTML = html_products;
 }
+
+// Adiciona na página principal os items carregados do array
 function addLi() {
     let html = '';
     if (products.length > 0) {
@@ -51,12 +60,15 @@ function addLi() {
     }
 }
 
-function lidarComEventoDoButton(e) {
+// Lida com o evendo do botão para adicionar item ao carrinho
+function lidarComEventoDoButton(event) {
     product_cart.classList.add('displayNone');
-    let b = e.target.parentNode.childNodes[5].innerText;
+    // Recebo a origem do evento e busco o nome do produto
+    let ref = event.target.parentNode.childNodes[5].innerText;
 
-    items.push(b);
+    items.push(ref);
 
+    // Realizo o tratamento necessário para atualizar os itens
     atualizarElementsCart();
     idx++;
     addIdx();
@@ -66,10 +78,13 @@ function lidarComEventoDoButton(e) {
     addExcluirItemListener();
 }
 
-function lidarComEventoDoExcluir(e) {
+// Lidar com o evento de excluir itens da página principal e do array de produtos
+function lidarComEventoDoExcluir(event) {
     let confirm = window.confirm("Deseja realmente excluir este item????");
     if (confirm) {
+        // Busco a origem do evento e retorno o nome do produto
         let ref = e.target.parentNode.childNodes[5].innerText;
+        // irei fazer uma busca sequencial e remover o primeiro item com o mesmo nome da variável ref
         for (let i = 0; i < products.length; i++) {
             if (products[i].name === ref) {
                 products.splice(i, 1);
@@ -80,6 +95,7 @@ function lidarComEventoDoExcluir(e) {
             }
         }
     }
+    // Atualizo as funções após a remoção 
     addLi();
     atualizarButtons();
     addButtonsListener();
@@ -87,9 +103,10 @@ function lidarComEventoDoExcluir(e) {
     addExcluirListener();
 }
 
-function lidarComEventoDoExcluirItem(e) {
-    let ref = e.srcElement.parentNode.childNodes[0].innerText;
-    for (let i = 0; i < products.length; i++) {
+//Realizar a retirada de elementos do array de itens no carrinho
+function lidarComEventoDoExcluirItem(event) {
+    let ref = event.target.parentNode.childNodes[0].innerText;
+    for (let i = 0; i < items.length; i++) {
         if (items[i] === ref) {
             items.splice(i, 1);
             break;
@@ -107,6 +124,7 @@ function lidarComEventoDoExcluirItem(e) {
     addExcluirItemListener();
 }
 
+//Adiciono a função novamente para cada item buscando evitar a duplicação
 function addButtonsListener() {
     for (let a of buttons) {
         a.removeEventListener("click", lidarComEventoDoButton);
@@ -114,6 +132,7 @@ function addButtonsListener() {
     }
 }
 
+//Adiciono a função novamente para cada item buscando evitar a duplicação
 function addExcluirListener() {
     for (let a of excluir) {
         a.removeEventListener("click", lidarComEventoDoExcluir);
@@ -121,6 +140,7 @@ function addExcluirListener() {
     }
 }
 
+//Adiciono a função novamente para cada item buscando evitar a duplicação
 function addExcluirItemListener() {
     for (let a of excluirItem) {
         a.removeEventListener("click", lidarComEventoDoExcluirItem);
@@ -128,18 +148,22 @@ function addExcluirItemListener() {
     }
 }
 
+//Atualizo a referência dos botões
 function atualizarButtons() {
     buttons = document.getElementsByClassName("button");
 }
 
+//Atualizo a referência dos botões de excluir itens
 function atualizarExcluir() {
     excluir = document.getElementsByClassName("excluir");
 }
 
+//Atualizo a referência dos botões de excluir itens do carrinho
 function atualizarExcluirItem() {
     excluirItem = document.getElementsByClassName("excluirItem");
 }
 
+// Função de listar o carrinho usando as propriedades de display none
 function listCart() {
     if (div_product.classList.contains('displayOn') && div_form.classList.contains('displayNone')) {
         product_cart.classList.remove('displayNone');
@@ -167,8 +191,8 @@ function listCart() {
     addExcluirItemListener();
 }
 
+// Atualiza o carrinho
 function atualizarCart() {
-    console.log(items);
     if (items.length >= 1) {
         atualizarElementsCart();
     } else {
@@ -180,13 +204,14 @@ function atualizarCart() {
     addExcluirItemListener();
 }
 
-
+// Apaga todos os itens do carrinho zerando o array 
 function apagaTudo() {
     items = [];
-    product_cart.innerHTML = '<h1>Produtos no carrinho</h1>';
+    atualizarCart();
     rmIdx();
 }
 
+// Função que abre o formulário utilizando a propriedade display none
 function openForm() {
     if (div_product.classList.contains('displayOn') && product_cart.classList.contains('displayNone')) {
         div_form.classList.remove('displayNone');
@@ -212,7 +237,7 @@ function openForm() {
     addButtonsListener();
 }
 
-
+// Função que irá fazer a validação da imagem com as propriedades onload e onerror
 function validateImg(url) {
     return new Promise((resolve, reject) => {
         let img = new Image();
@@ -232,6 +257,7 @@ function validateImg(url) {
     });
 }
 
+// Realiza a validação do nome buscando se o tamanho > 0
 function validateName(name) {
     return new Promise((resolve, reject) => {
         if (name.length) {
@@ -243,6 +269,7 @@ function validateName(name) {
     });
 }
 
+// Realiza a validação do número transformando em inteiro e verificando se é válido e maior que 0
 function validateNum(num) {
     return new Promise((resolve, reject) => {
         let number = parseInt(num);

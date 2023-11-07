@@ -23,6 +23,7 @@ trash.addEventListener("click", () => apagaTudo());
 
 addItem.addEventListener("click", () => openForm());
 
+// Usa uma função assíncrona para realizar a validação do formulário
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
     div_form.classList.remove('displayOn');
