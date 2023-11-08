@@ -72,8 +72,6 @@ function lidarComEventoDoButton(event) {
     atualizarElementsCart();
     idx++;
     addIdx();
-    atualizarExcluir();
-    addExcluirListener();
     atualizarExcluirItem();
     addExcluirItemListener();
 }
@@ -83,7 +81,7 @@ function lidarComEventoDoExcluir(event) {
     let confirm = window.confirm("Deseja realmente excluir este item????");
     if (confirm) {
         // Busco a origem do evento e retorno o nome do produto
-        let ref = e.target.parentNode.childNodes[5].innerText;
+        let ref = event.target.parentNode.childNodes[5].innerText;
         // irei fazer uma busca sequencial e remover o primeiro item com o mesmo nome da variável ref
         for (let i = 0; i < products.length; i++) {
             if (products[i].name === ref) {
@@ -107,17 +105,19 @@ function lidarComEventoDoExcluir(event) {
 function lidarComEventoDoExcluirItem(event) {
     let ref = event.target.parentNode.childNodes[0].innerText;
     for (let i = 0; i < items.length; i++) {
+        // irei fazer uma busca sequencial e remover o primeiro item com o mesmo nome da variável ref
         if (items[i] === ref) {
             items.splice(i, 1);
+            // Decremento o índice e altero no elemento que mostra a quantidade de itens no carrinho
+            if (idx > 0) {
+                idx--;
+                addIdx();
+            }
             break;
         }
         if (items.length == 0) {
             items = [];
         }
-    }
-    if (idx > 0) {
-        idx--;
-        addIdx();
     }
     atualizarCart();
     atualizarExcluirItem();
@@ -185,10 +185,6 @@ function listCart() {
         product_cart.classList.remove('displayNone');
         product_cart.classList.add('displayOn');
     }
-    atualizarExcluir();
-    addExcluirListener();
-    atualizarExcluirItem();
-    addExcluirItemListener();
 }
 
 // Atualiza o carrinho
@@ -198,10 +194,6 @@ function atualizarCart() {
     } else {
         document.getElementById("product-cart").innerHTML = '<h1>Produtos no carrinho</h1>';
     }
-    atualizarExcluir();
-    addExcluirListener();
-    atualizarExcluirItem();
-    addExcluirItemListener();
 }
 
 // Apaga todos os itens do carrinho zerando o array 
@@ -234,7 +226,6 @@ function openForm() {
         div_form.classList.remove('displayNone');
         div_form.classList.add('displayOn');
     }
-    addButtonsListener();
 }
 
 // Função que irá fazer a validação da imagem com as propriedades onload e onerror

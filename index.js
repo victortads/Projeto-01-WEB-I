@@ -12,10 +12,9 @@ let div_form = document.getElementById("div-formulario");
 let form = document.getElementById("formulario");
 let submit = document.getElementById("submit");
 
-addLi();
-addButtonsListener();
-addExcluirListener();
-addExcluirItemListener();
+addLi(); //Adiciono os items carregados do Array na página principal
+addButtonsListener(); //Adiono as funções dos botões adicionar ao carrinho
+addExcluirListener(); //Adiono as funções dos botões excluir produtos
 
 cart.addEventListener("click", () => listCart());
 
@@ -37,6 +36,7 @@ form.addEventListener('submit', async (event) => {
         "price": price,
         "src": imgURL
     };
+
     if (await validateImg(imgURL) && await validateName(name) && await validateNum(price)) {
         products.push(product);
         document.getElementById("productImageUrl").value = '';
@@ -48,7 +48,6 @@ form.addEventListener('submit', async (event) => {
         atualizarExcluir();
         addExcluirListener();
     }
-
 
     div_form.classList.remove('displayOn');
     div_form.classList.add('displayNone');
